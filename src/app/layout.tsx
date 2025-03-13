@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "@/styles/globals.css";
+import TQProviders from "@/providers/TQProvider";
 
 const pretendard = localFont({
   src: "../assets/fonts/PretendardVariable.woff2",
@@ -21,7 +22,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko">
-      <body className={pretendard.className}>{children}</body>
+      <body className={pretendard.className}>
+        <TQProviders>{children}</TQProviders>
+      </body>
     </html>
   );
 }
