@@ -38,7 +38,7 @@ export async function updateTodo(updatedTodo: Todo): Promise<Todo> {
 }
 
 // 삭제 (D)
-export async function deleteTodo(id: number): Promise<void> {
+export async function deleteTodo(id: string): Promise<void> {
   const res = await fetch(`${API_URL}/${id}`, {
     method: "DELETE"
   });
