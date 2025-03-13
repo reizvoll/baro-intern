@@ -42,7 +42,7 @@ export default function TodoForm() {
       />
       <button
         type="submit"
-        className="bg-blue-500 text-white px-4 py-1 rounded hover:bg-blue-600"
+        className="bg-green-400 text-white px-4 py-1 rounded hover:bg-green-500"
       >
         추가
       </button>
