@@ -1,4 +1,4 @@
-export function formatTime(createdAt: string, isMobile: string) {
+export function formatTime(createdAt: string, isMobile: boolean) {
   const now = new Date();
   const createdDate = new Date(createdAt);
   const diffInMs = now.getTime() - createdDate.getTime();
@@ -21,9 +21,11 @@ export function formatTime(createdAt: string, isMobile: string) {
   }
 
   // 이전 날짜 작성 → M.DD / HH:mm 형식
-  return `${createdDate.getMonth() + 1}/${createdDate.getDate()} ${createdDate.toLocaleTimeString("ko-KR", {
-    hour: "2-digit",
-    minute: "2-digit",
-    hour12: false
-  })}`;
+  return isMobile
+    ? `${createdDate.getMonth() + 1}.${createdDate.getDate()}`
+    : `${createdDate.getMonth() + 1}.${createdDate.getDate()} ${createdDate.toLocaleTimeString("ko-KR", {
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: false,
+      })}`;
 }

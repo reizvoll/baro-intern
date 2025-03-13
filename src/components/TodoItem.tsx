@@ -6,9 +6,21 @@ import { Todo } from "../types/todo";
 import TrashButton from "./ui/TrashButton";
 import Checkbox from "./ui/Checkbox";
 import { formatTime } from "@/utils/formatTime";
+import { useEffect, useState } from "react";
 
 export default function TodoItem({ todo }: { todo: Todo }) {
   const queryClient = useQueryClient();
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 420); // 420px 미만, 모바일로 판단
+    };
+
+    handleResize(); // 초기 실행
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   // 투두 수정 뮤테이션
   const updateMutation = useMutation({
@@ -55,7 +67,7 @@ export default function TodoItem({ todo }: { todo: Todo }) {
 
       <div className="flex items-center gap-4">
       <span className="text-sm text-gray-500 dark:text-gray-400 min-w-[40px] text-right">
-      {formatTime(todo.createdAt)}
+      {formatTime(todo.createdAt, isMobile)}
         </span>
         <button onClick={handleDelete} className="text-red-500 hover:text-red-700">
           <TrashButton />
