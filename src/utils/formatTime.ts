@@ -1,4 +1,4 @@
-export function formatTime(createdAt: string) {
+export function formatTime(createdAt: string, isMobile: string) {
   const now = new Date();
   const createdDate = new Date(createdAt);
   const diffInMs = now.getTime() - createdDate.getTime();
