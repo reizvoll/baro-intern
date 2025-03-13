@@ -49,7 +49,7 @@ export default function TodoItem({ todo }: { todo: Todo }) {
   };
 
   return (
-    <li className="flex items-center justify-between p-2">
+    <li className="flex items-center justify-between p-3 md:p-6">
       {/* 체크박스 + 텍스트 */}
       <div className="flex items-center gap-4 flex-1 min-w-0">
       <Checkbox checked={todo.completed} onToggle={handleToggle} />

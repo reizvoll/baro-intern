@@ -23,7 +23,7 @@ export default function TodoList() {
   }
 
   return (
-    <div className="w-full max-w-2xl mx-auto">
+    <div className="w-full max-w-2xl mx-auto md:pt-4">
       {/* 탭 버튼 컨테이너 */}
       <div className="relative border-b border-gray-300 flex">
         {[
@@ -34,7 +34,7 @@ export default function TodoList() {
           <button
             key={tab.key}
             onClick={() => setFilter(tab.key as "all" | "completed" | "active")}
-            className={`flex-1 text-center py-2 text-lg font-medium transition-colors 
+            className={`flex-1 text-center py-2 text-sm md:text-base lg:text-lg font-medium transition-colors 
               ${
                 filter === tab.key
                   ? "text-black font-bold dark:text-gray-100" // 라이트 모드: 검정 / 다크 모드: 밝은 회색
@@ -55,7 +55,7 @@ export default function TodoList() {
       </div>
 
       {/* 필터링된 투두 리스트 */}
-      <ul className="pt-10 space-y-2">
+      <ul className="pt-8 space-y-2">
         {filteredTodos.map((todo) => (
           <TodoItem key={todo.id} todo={todo} />
         ))}

@@ -3,8 +3,8 @@ import TodoList from "@/components/TodoList";
 
 export default function Home() {
   return (
-    <main className="p-4">
-      <h1 className="text-2xl font-bold mb-4">TODO 리스트</h1>
+    <main className="pt-10 max-w-[1200px] mx-auto  px-4 md:px-6">
+      <h1 className="text-2xl font-bold text-center">TODO 리스트</h1>
       <TodoForm />
       <TodoList />
     </main>
