@@ -26,6 +26,6 @@ export function formatTime(createdAt: string, isMobile: boolean) {
     : `${createdDate.getMonth() + 1}/${createdDate.getDate()} ${createdDate.toLocaleTimeString("ko-KR", {
         hour: "2-digit",
         minute: "2-digit",
-        hour12: false,
+        hour12: false
       })}`;
 }

@@ -29,7 +29,7 @@ export default function TodoList() {
         {[
           { key: "all", label: "전체" },
           { key: "active", label: "진행중" },
-          { key: "completed", label: "완료" },
+          { key: "completed", label: "완료" }
         ].map((tab, index) => (
           <button
             key={tab.key}
@@ -49,7 +49,7 @@ export default function TodoList() {
           className="absolute bottom-0 h-[3px] bg-black dark:bg-gray-100 transition-all duration-300"
           style={{
             width: "33.333%", // 한 개의 탭 너비 (3개일 경우 33.333%)
-            left: filter === "all" ? "0%" : filter === "active" ? "33.333%" : "66.666%",
+            left: filter === "all" ? "0%" : filter === "active" ? "33.333%" : "66.666%"
           }}
         />
       </div>

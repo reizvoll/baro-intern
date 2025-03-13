@@ -9,6 +9,6 @@ export function useTodos() {
     queryKey: ["todos"],
     queryFn: getTodos,
     staleTime: 60 * 1000,
-    refetchOnWindowFocus: false,
+    refetchOnWindowFocus: false
   });
 }
