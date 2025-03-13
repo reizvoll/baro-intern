@@ -22,8 +22,8 @@ export function formatTime(createdAt: string, isMobile: boolean) {
 
   // 이전 날짜 작성 → M.DD / HH:mm 형식
   return isMobile
-    ? `${createdDate.getMonth() + 1}.${createdDate.getDate()}`
-    : `${createdDate.getMonth() + 1}.${createdDate.getDate()} ${createdDate.toLocaleTimeString("ko-KR", {
+    ? `${createdDate.getMonth() + 1}/${createdDate.getDate()}`
+    : `${createdDate.getMonth() + 1}/${createdDate.getDate()} ${createdDate.toLocaleTimeString("ko-KR", {
         hour: "2-digit",
         minute: "2-digit",
         hour12: false,
