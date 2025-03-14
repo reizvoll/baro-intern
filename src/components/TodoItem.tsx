@@ -6,9 +6,9 @@ import { deleteTodo, updateTodo } from "../api/api";
 import { Todo } from "../types/todo";
 import Checkbox from "./ui/Checkbox";
 import TodoEditor from "./TodoEditor";
-import EditIcon from "./ui/EditIcon";
-import TrashIcon from "./ui/TrashIcon";
 import { formatTime } from "@/utils/formatTime";
+import EditButton from "./ui/EditButton";
+import TrashButton from "./ui/TrashButton";
 
 export default function TodoItem({ todo }: { todo: Todo }) {
   const queryClient = useQueryClient();
@@ -85,18 +85,16 @@ export default function TodoItem({ todo }: { todo: Todo }) {
     {formatTime(todo.createdAt, isMobile)}
   </span>
   <div className="px-4 flex">
-    <button
+    <EditButton
       onClick={() => setIsEditing(true)}
+      className="text-gray-500 dark:text-gray-400 hover:text-blue-700 dark:hover:text-blue-500"
       title="Edit Todo"
-    >
-      <EditIcon />
-    </button>
-    <button
+    />
+    <TrashButton
       onClick={handleDelete}
+      className="text-gray-500 dark:text-gray-400 hover:text-blue-700 dark:hover:text-blue-500"
       title="Delete Todo"
-    >
-      <TrashIcon />
-    </button>
+    />
   </div>
 </div>
     </li>

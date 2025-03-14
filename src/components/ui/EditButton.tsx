@@ -1,6 +1,8 @@
-export default function EditIcon() {
+import { IconButtonProps } from "@/types/todo";
+
+export default function EditButton({ onClick, className = "" }: IconButtonProps) {
   return (
-    <button className="p-2 transition">
+    <button onClick={onClick} className={`p-2 transition ${className}`}>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 256 256"
