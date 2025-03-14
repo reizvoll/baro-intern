@@ -1,4 +1,4 @@
-export default function TrashButton() {
+export default function TrashIcon() {
   return (
     <button className="p-2 transition">
       <svg

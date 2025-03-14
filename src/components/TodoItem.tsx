@@ -1,16 +1,19 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { deleteTodo, updateTodo } from "../api/api";
 import { Todo } from "../types/todo";
-import TrashButton from "./ui/TrashButton";
 import Checkbox from "./ui/Checkbox";
+import TodoEditor from "./TodoEditor";
+import EditIcon from "./ui/EditIcon";
+import TrashIcon from "./ui/TrashIcon";
 import { formatTime } from "@/utils/formatTime";
-import { useEffect, useState } from "react";
 
 export default function TodoItem({ todo }: { todo: Todo }) {
   const queryClient = useQueryClient();
   const [isMobile, setIsMobile] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
 
   useEffect(() => {
     const handleResize = () => {
@@ -26,16 +29,16 @@ export default function TodoItem({ todo }: { todo: Todo }) {
   const updateMutation = useMutation({
     mutationFn: (updated: Todo) => updateTodo(updated),
     onSuccess: () => {
-        queryClient.invalidateQueries({ queryKey: ["todos"] });
-      },
+      queryClient.invalidateQueries({ queryKey: ["todos"] });
+    }
   });
 
   // 투두 삭제 뮤테이션
   const deleteMutation = useMutation({
     mutationFn: (id: string) => deleteTodo(id),
     onSuccess: () => {
-        queryClient.invalidateQueries({ queryKey: ["todos"] });
-      },
+      queryClient.invalidateQueries({ queryKey: ["todos"] });
+    }
   });
 
   // 완료 상태 토글
@@ -48,30 +51,47 @@ export default function TodoItem({ todo }: { todo: Todo }) {
     deleteMutation.mutate(todo.id);
   };
 
+  const handleTitleSubmit = (newTitle: string) => {
+    updateMutation.mutate({ ...todo, title: newTitle });
+    setIsEditing(false);
+  };
+
+  const handleTitleCancel = () => {
+    setIsEditing(false);
+  };
+
   return (
     <li className="flex items-center justify-between p-3 md:p-6">
-      {/* 체크박스 + 텍스트 */}
+      {/* 체크박스 + 제목 또는 수정 인풋 */}
       <div className="flex items-center gap-4 flex-1 min-w-0">
-      <Checkbox checked={todo.completed} onToggle={handleToggle} />
-        <span
-           className={`text-lg transition-colors truncate flex-1 min-w-0 ${
-            todo.completed
-              ? "text-gray-400 dark:text-gray-600"
-              : "text-gray-900 dark:text-gray-100"
-          }`}
-          title={todo.title}
-        >
-          {todo.title}
-        </span>
+        <Checkbox checked={todo.completed} onToggle={handleToggle} />
+        {isEditing ? (
+          <TodoEditor title={todo.title} onSubmit={handleTitleSubmit} onCancel={handleTitleCancel} />
+        ) : (
+          <span
+            className={`text-lg transition-colors truncate flex-1 min-w-0 cursor-pointer ${
+              todo.completed ? "text-gray-400 dark:text-gray-600" : "text-gray-900 dark:text-gray-100"
+            }`}
+            title={todo.title}
+            onDoubleClick={() => setIsEditing(true)}
+          >
+            {todo.title}
+          </span>
+        )}
       </div>
 
-      <div className="flex items-center gap-4">
-      <span className="text-sm text-gray-500 dark:text-gray-400 min-w-[40px] text-right">
-      {formatTime(todo.createdAt, isMobile)}
+      <div className="flex items-center">
+        <span className="text-sm text-gray-500 dark:text-gray-400 min-w-[40px] text-right">
+          {formatTime(todo.createdAt, isMobile)}
         </span>
-        <button onClick={handleDelete} className="text-red-500 hover:text-red-700">
-          <TrashButton />
-        </button>
+        <div className="px-4">
+          <button onClick={() => setIsEditing(true)} className="text-blue-500 hover:text-blue-700" title="Edit Todo">
+            <EditIcon />
+          </button>
+          <button onClick={handleDelete} className="text-red-500 hover:text-red-700">
+            <TrashIcon />
+          </button>
+        </div>
       </div>
     </li>
   );
