@@ -81,18 +81,24 @@ export default function TodoItem({ todo }: { todo: Todo }) {
       </div>
 
       <div className="flex items-center">
-        <span className="text-sm text-gray-500 dark:text-gray-400 min-w-[40px] text-right">
-          {formatTime(todo.createdAt, isMobile)}
-        </span>
-        <div className="px-4">
-          <button onClick={() => setIsEditing(true)} className="text-blue-500 hover:text-blue-700" title="Edit Todo">
-            <EditIcon />
-          </button>
-          <button onClick={handleDelete} className="text-red-500 hover:text-red-700">
-            <TrashIcon />
-          </button>
-        </div>
-      </div>
+  <span className="text-sm text-gray-500 dark:text-gray-400 min-w-[40px] text-right pl-2">
+    {formatTime(todo.createdAt, isMobile)}
+  </span>
+  <div className="px-4 flex">
+    <button
+      onClick={() => setIsEditing(true)}
+      title="Edit Todo"
+    >
+      <EditIcon />
+    </button>
+    <button
+      onClick={handleDelete}
+      title="Delete Todo"
+    >
+      <TrashIcon />
+    </button>
+  </div>
+</div>
     </li>
   );
 }

@@ -4,7 +4,7 @@ export default function EditIcon() {
       <svg
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 256 256"
-        className="w-6 h-6"
+        className="w-6 h-6 text-gray-500 hover:text-blue-500 dark:text-gray-300 dark:hover:text-blue-400"
       >
         <rect width="256" height="256" fill="none" />
         <path
