@@ -7,7 +7,6 @@ import { Todo } from "../types/todo";
 
 export default function TodoForm() {
   const [title, setTitle] = useState("");
-  const [listid, setListId] = useState(0);
   const queryClient = useQueryClient();
 
   // createTodo API를 호출하는 뮤테이션
@@ -17,19 +16,26 @@ export default function TodoForm() {
       queryClient.invalidateQueries({ queryKey: ["todos"] });
     }
   });
-
   // 폼 제출 이벤트 핸들러
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!title.trim()) return;
-    const id = (listid + 1).toString();
-    setListId(listid + 1);
+
+    // 현재 todos 목록 가져와 배열로 처리 (없으면 빈 배열이 나오게끔)
+    const todos = (queryClient.getQueryData<Todo[]>(["todos"]) ?? []) as Todo[];
+    const maxId = todos.reduce((max: number, todo: Todo) => {
+      const numId = parseInt(todo.id, 10);
+      return numId > max ? numId : max;
+    }, 0);
+    const newId = (maxId + 1).toString();
+
     createMutation.mutate({
-      id: id,
+      id: newId,
       title,
       completed: false,
       created_at: new Date().toISOString()
     });
+    setTitle(""); //초기화 설정
   };
 
   return (
