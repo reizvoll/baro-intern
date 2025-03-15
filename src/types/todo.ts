@@ -7,6 +7,5 @@ export interface Todo {
 
 export interface IconButtonProps {
   onClick: () => void;
-  className: string;
-  title: string;
+  title?: string;
 }

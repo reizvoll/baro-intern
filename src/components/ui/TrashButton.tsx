@@ -1,8 +1,8 @@
 import { IconButtonProps } from "@/types/todo";
 
-export default function TrashButton({ onClick, className = "" }: IconButtonProps) {
+export default function TrashButton({ onClick }: IconButtonProps) {
   return (
-    <button onClick={onClick} className={`p-2 transition tb:p-1 ${className}`}>
+    <button onClick={onClick} className={`p-2 transition tb:p-1`}>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 256 256"
