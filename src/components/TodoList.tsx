@@ -15,6 +15,12 @@ export default function TodoList() {
   if (isError) return <div>에러가 발생했습니다.</div>;
   if (!todos) return null;
 
+  //필터별 개수 계산
+  const totalCount = todos.length;
+  const activeCount = todos.filter((todo) => !todo.completed).length;
+  const completedCount = todos.filter((todo) => todo.completed).length;
+
+  // 선택된 필터에 따라 목록 필터링
   let filteredTodos = todos;
   if (filter === "completed") {
     filteredTodos = todos.filter((todo) => todo.completed);
@@ -27,20 +33,20 @@ export default function TodoList() {
       {/* 탭 버튼 컨테이너 */}
       <div className="relative flex border-b border-gray-300">
         {[
-          { key: "all", label: "전체" },
-          { key: "active", label: "진행중" },
-          { key: "completed", label: "완료" }
+          { key: "all", label: "전체", count: totalCount },
+          { key: "active", label: "진행 중", count: activeCount },
+          { key: "completed", label: "완료", count: completedCount }
         ].map((tab, index) => (
           <button
             key={tab.key}
             onClick={() => setFilter(tab.key as "all" | "completed" | "active")}
-            className={`text-body1 tb:text-body2 mb:text-body3 flex-1 py-2 text-center transition-colors ${
+            className={`flex-1 py-2 text-center text-body1 transition-colors tb:text-body2 mb:text-body3 ${
               filter === tab.key
                 ? "font-bold text-black dark:text-gray-100" // 라이트 모드: 검정 / 다크 모드: 밝은 회색
                 : "text-gray-500 dark:text-gray-400" // 선택 안 된 탭 색상 반전
             }`}
           >
-            {tab.label}
+            {tab.label} ({tab.count})
           </button>
         ))}
         {/* 활성 탭 밑줄 애니메이션 */}
