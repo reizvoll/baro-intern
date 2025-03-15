@@ -8,11 +8,7 @@ type TodoEditorProps = {
   onCancel: () => void;
 };
 
-export default function TodoEditor({
-  title,
-  onSubmit,
-  onCancel,
-}: TodoEditorProps) {
+export default function TodoEditor({ title, onSubmit, onCancel }: TodoEditorProps) {
   const [newTitle, setNewTitle] = useState(title);
 
   const handleEditSubmit = () => {
@@ -41,7 +37,7 @@ export default function TodoEditor({
       onBlur={handleEditSubmit}
       onKeyDown={handleKeyDown}
       autoFocus
-      className="text-lg transition-colors truncate flex-1 min-w-0 p-1 border rounded"
+      className="min-w-0 flex-1 rounded border bg-white px-2 py-1 text-xs outline-none transition-colors sm:text-sm md:text-base dark:border-gray-600 dark:bg-gray-800 dark:text-white"
     />
   );
 }

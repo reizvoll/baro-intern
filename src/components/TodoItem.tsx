@@ -1,12 +1,12 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { formatTime } from "@/utils/formatTime";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useEffect, useState } from "react";
 import { deleteTodo, updateTodo } from "../api/api";
 import { Todo } from "../types/todo";
-import Checkbox from "./ui/Checkbox";
 import TodoEditor from "./TodoEditor";
-import { formatTime } from "@/utils/formatTime";
+import Checkbox from "./ui/Checkbox";
 import EditButton from "./ui/EditButton";
 import TrashButton from "./ui/TrashButton";
 
@@ -63,13 +63,13 @@ export default function TodoItem({ todo }: { todo: Todo }) {
   return (
     <li className="flex items-center justify-between p-3 md:p-6">
       {/* 체크박스 + 제목 또는 수정 인풋 */}
-      <div className="flex items-center gap-4 flex-1 min-w-0">
+      <div className="flex min-w-0 flex-1 items-center gap-4">
         <Checkbox checked={todo.completed} onToggle={handleToggle} />
         {isEditing ? (
           <TodoEditor title={todo.title} onSubmit={handleTitleSubmit} onCancel={handleTitleCancel} />
         ) : (
           <span
-            className={`text-lg transition-colors truncate flex-1 min-w-0 cursor-pointer ${
+            className={`min-w-0 flex-1 cursor-pointer truncate text-xs transition-colors sm:text-sm md:text-base ${
               todo.completed ? "text-gray-400 dark:text-gray-600" : "text-gray-900 dark:text-gray-100"
             }`}
             title={todo.title}
@@ -81,22 +81,22 @@ export default function TodoItem({ todo }: { todo: Todo }) {
       </div>
 
       <div className="flex items-center">
-  <span className="text-sm text-gray-500 dark:text-gray-400 min-w-[40px] text-right pl-2">
-    {formatTime(todo.createdAt, isMobile)}
-  </span>
-  <div className="px-4 flex">
-    <EditButton
-      onClick={() => setIsEditing(true)}
-      className="text-gray-500 dark:text-gray-400 hover:text-blue-700 dark:hover:text-blue-500"
-      title="Edit Todo"
-    />
-    <TrashButton
-      onClick={handleDelete}
-      className="text-gray-500 dark:text-gray-400 hover:text-blue-700 dark:hover:text-blue-500"
-      title="Delete Todo"
-    />
-  </div>
-</div>
+        <span className="min-w-[40px] pl-2 text-right text-xs text-gray-500 sm:text-sm md:text-base dark:text-gray-400">
+          {formatTime(todo.createdAt, isMobile)}
+        </span>
+        <div className="flex px-4">
+          <EditButton
+            onClick={() => setIsEditing(true)}
+            className="text-gray-500 hover:text-blue-700 dark:text-gray-400 dark:hover:text-blue-500"
+            title="Edit Todo"
+          />
+          <TrashButton
+            onClick={handleDelete}
+            className="text-gray-500 hover:text-blue-700 dark:text-gray-400 dark:hover:text-blue-500"
+            title="Delete Todo"
+          />
+        </div>
+      </div>
     </li>
   );
 }

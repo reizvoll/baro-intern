@@ -1,8 +1,8 @@
 "use client";
 
-import { FormEvent, useState } from "react";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { createTodo } from "@/api/api";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { FormEvent, useState } from "react";
 import { Todo } from "../types/todo";
 
 export default function TodoForm() {
@@ -33,9 +33,9 @@ export default function TodoForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="flex gap-2 sm:gap-4 p-4 max-w-[600px] mx-auto flex-nowrap">
+    <form onSubmit={handleSubmit} className="mx-auto flex max-w-[600px] flex-nowrap gap-2 p-4 sm:gap-4">
       <input
-        className="border rounded px-2 py-1 min-w-0 flex-1 outline-none text-xs sm:text-sm md:text-base bg-white dark:bg-gray-800 dark:text-white dark:border-gray-600"
+        className="min-w-0 flex-1 rounded border bg-white px-2 py-1 text-xs outline-none sm:text-sm md:text-base dark:border-gray-600 dark:bg-gray-800 dark:text-white"
         type="text"
         placeholder="내용을 입력해주세요."
         value={title}
@@ -43,10 +43,10 @@ export default function TodoForm() {
       />
       <button
         type="submit"
-        className="bg-gray-400 dark:bg-gray-600 text-white px-3 py-1 rounded-full hover:bg-gray-500 dark:hover:bg-gray-700 text-sm sm:text-base shrink-0"
+        className="shrink-0 rounded-full bg-gray-400 px-3 py-1 text-sm text-white hover:bg-gray-500 sm:text-base dark:bg-gray-600 dark:hover:bg-gray-700"
       >
-        <span className="hidden min-[286px]:block">Add +</span>
-        <span className="block min-[286px]:hidden">+</span>
+        <span className="min-[286px]:block hidden">Add +</span>
+        <span className="min-[286px]:hidden block">+</span>
       </button>
     </form>
   );

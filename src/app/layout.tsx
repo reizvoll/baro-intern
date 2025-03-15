@@ -1,7 +1,7 @@
+import TQProviders from "@/providers/TQProvider";
+import "@/styles/globals.css";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
-import "@/styles/globals.css";
-import TQProviders from "@/providers/TQProvider";
 
 const pretendard = localFont({
   src: "../assets/fonts/PretendardVariable.woff2",
