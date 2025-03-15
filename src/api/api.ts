@@ -3,7 +3,7 @@ import { Todo } from "../types/todo";
 const API_URL = "http://localhost:3000/todos";
 
 // 목록 조회
-export async function getTodos(): Promise<Todo[]> {
+export async function fetchTodos(): Promise<Todo[]> {
   const res = await fetch(API_URL);
   if (!res.ok) {
     throw new Error("Failed to fetch todos");
