@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useTodos } from "../hooks/useTodos";
 import TodoItem from "./TodoItem";
+import LoadingSpinner from "./ui/LoadingSpinner";
 
 export default function TodoList() {
   // 필터 상태: all, completed, active
@@ -11,7 +12,12 @@ export default function TodoList() {
   // 커스텀 훅을 통해 투두 목록을 가져옵니다.
   const { data: todos, isPending, isError } = useTodos();
 
-  if (isPending) return <div>로딩 중...</div>;
+  if (isPending)
+    return (
+      <div className="mt-16 flex justify-center">
+        <LoadingSpinner />
+      </div>
+    );
   if (isError) return <div>에러가 발생했습니다.</div>;
   if (!todos) return null;
 
