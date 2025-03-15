@@ -7,7 +7,12 @@ const config: Config = {
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}"
   ],
   theme: {
-    extend: {}
+    extend: {
+      screens: {
+        tb: { max: "768px" }, // 일반 타블렛 크기
+        mb: { max: "480px" }, // 가장 큰 폰 크기
+      }
+    }
   },
   plugins: []
 };
