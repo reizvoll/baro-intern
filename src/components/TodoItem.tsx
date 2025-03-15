@@ -61,7 +61,7 @@ export default function TodoItem({ todo }: { todo: Todo }) {
   };
 
   return (
-    <li className="flex items-center justify-between p-3 md:p-6">
+    <li className="flex items-center justify-between p-4 tb:p-3 mb:p-2">
       {/* 체크박스 + 제목 또는 수정 인풋 */}
       <div className="flex min-w-0 flex-1 items-center gap-4">
         <Checkbox checked={todo.completed} onToggle={handleToggle} />
@@ -69,9 +69,9 @@ export default function TodoItem({ todo }: { todo: Todo }) {
           <TodoEditor title={todo.title} onSubmit={handleTitleSubmit} onCancel={handleTitleCancel} />
         ) : (
           <span
-            className={`min-w-0 flex-1 cursor-pointer truncate text-xs transition-colors sm:text-sm md:text-base ${
+            className={`min-w-0 flex-1 cursor-pointer truncate transition-colors ${
               todo.completed ? "text-gray-400 dark:text-gray-600" : "text-gray-900 dark:text-gray-100"
-            }`}
+            } text-body1 tb:text-body2 mb:text-body3`}
             title={todo.title}
             onDoubleClick={() => setIsEditing(true)}
           >
@@ -81,10 +81,10 @@ export default function TodoItem({ todo }: { todo: Todo }) {
       </div>
 
       <div className="flex items-center">
-        <span className="min-w-[40px] pl-2 text-right text-xs text-gray-500 sm:text-sm md:text-base dark:text-gray-400">
+        <span className="text-body1 tb:text-body2 mb:text-body3 min-w-[40px] pl-2 text-right text-gray-500 dark:text-gray-400">
           {formatTime(todo.createdAt, isMobile)}
         </span>
-        <div className="flex px-4">
+        <div className="flex gap-2 px-4">
           <EditButton
             onClick={() => setIsEditing(true)}
             className="text-gray-500 hover:text-blue-700 dark:text-gray-400 dark:hover:text-blue-500"

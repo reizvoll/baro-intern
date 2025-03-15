@@ -37,7 +37,7 @@ export default function TodoEditor({ title, onSubmit, onCancel }: TodoEditorProp
       onBlur={handleEditSubmit}
       onKeyDown={handleKeyDown}
       autoFocus
-      className="min-w-0 flex-1 rounded border bg-white px-2 py-1 text-xs outline-none transition-colors sm:text-sm md:text-base dark:border-gray-600 dark:bg-gray-800 dark:text-white"
+      className="text-body1 tb:text-body2 mb:text-body3 min-w-0 flex-1 rounded border bg-white px-2 py-1 outline-none transition-colors dark:border-gray-600 dark:bg-gray-800 dark:text-white"
     />
   );
 }
