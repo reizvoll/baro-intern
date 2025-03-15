@@ -63,7 +63,7 @@ export default function TodoItem({ todo }: { todo: Todo }) {
   return (
     <li className="flex items-center justify-between p-4 tb:p-3 mb:p-2">
       {/* 체크박스 + 제목 또는 수정 인풋 */}
-      <div className="flex min-w-0 flex-1 items-center gap-4">
+      <div className="flex min-w-0 flex-1 items-center gap-4 tb:gap-3 mb:gap-2">
         <Checkbox checked={todo.completed} onToggle={handleToggle} />
         {isEditing ? (
           <TodoEditor title={todo.title} onSubmit={handleTitleSubmit} onCancel={handleTitleCancel} />
@@ -91,7 +91,7 @@ export default function TodoItem({ todo }: { todo: Todo }) {
             isEditing ? (
               <button
                 onClick={handleTitleSubmit.bind(null, todo.title)}
-                className="text-body3 px-1 text-gray-500 hover:text-gray-700 dark:text-gray-300 dark:hover:text-gray-500"
+                className="text-body3 rounded border bg-gray-100 px-3 py-1 text-gray-500 dark:bg-gray-800 dark:text-gray-300"
               >
                 완료
               </button>
@@ -103,7 +103,7 @@ export default function TodoItem({ todo }: { todo: Todo }) {
               {isEditing ? (
                 <button
                   onClick={handleTitleSubmit.bind(null, todo.title)}
-                  className="text-body1 tb:text-body2 mb:text-body3 text-gray-500 hover:text-gray-700 dark:text-gray-300 dark:hover:text-gray-500"
+                  className="text-body1 tb:text-body2 rounded border bg-gray-100 px-3 py-1 text-gray-500 hover:bg-gray-200 hover:text-gray-700 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-gray-500"
                 >
                   완료
                 </button>
