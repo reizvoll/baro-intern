@@ -35,6 +35,11 @@ export default function TodoItem({ todo }: { todo: Todo }) {
   });
 
   const handleToggle = () => {
+    queryClient.setQueryData(["todos"], (oldTodos: Todo[] = []) =>
+      oldTodos.map((t) => (t.id === todo.id ? { ...t, completed: !t.completed } : t))
+    );
+  
+    // API 요청은 백그라운드에서 실행
     updateMutation.mutate({ ...todo, completed: !todo.completed });
   };
 
