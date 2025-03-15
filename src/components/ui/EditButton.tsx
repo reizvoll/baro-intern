@@ -2,11 +2,11 @@ import { IconButtonProps } from "@/types/todo";
 
 export default function EditButton({ onClick, className = "" }: IconButtonProps) {
   return (
-    <button onClick={onClick} className={`p-2 transition ${className}`}>
+    <button onClick={onClick} className={`p-2 transition tb:p-1 ${className}`}>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 256 256"
-        className="w-6 h-6 text-gray-500 hover:text-blue-500 dark:text-gray-300 dark:hover:text-blue-400"
+        className="h-6 w-6 text-gray-500 hover:text-blue-500 tb:h-5 tb:w-5 mb:h-4 mb:w-4 dark:text-gray-300 dark:hover:text-blue-400"
       >
         <rect width="256" height="256" fill="none" />
         <path
