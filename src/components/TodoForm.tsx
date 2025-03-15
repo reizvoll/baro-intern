@@ -13,23 +13,22 @@ export default function TodoForm() {
   const createMutation = useMutation({
     mutationFn: createTodo,
     onMutate: async (newTodo) => {
-      await queryClient.cancelQueries({ queryKey: ["todos"] }); // 기존 요청 중단
+      await queryClient.cancelQueries({ queryKey: ["todos"] });
 
-      // 기존 todos 가져오기
       const prevTodos = queryClient.getQueryData<Todo[]>(["todos"]) || [];
 
-      // 새로운 todo를 낙관적으로 추가
-      queryClient.setQueryData(["todos"], (oldTodos: Todo[] = []) => [...oldTodos, newTodo]);
+      // 낙관적 업데이트 (onMutate에서만 수행)
+      queryClient.setQueryData(["todos"], [...prevTodos, newTodo]);
 
       return { prevTodos };
     },
     onError: (_err, _newTodo, context) => {
-      // 요청 실패 시 롤백
+      // 요청 실패 시 원래 데이터로 롤백
       queryClient.setQueryData(["todos"], context?.prevTodos);
     },
-    onSuccess: (newTodo) => {
-      // 성공 시 UI에서 바로 반영 (불필요한 refetch 방지)
-      queryClient.setQueryData(["todos"], (oldTodos: Todo[] = []) => [...oldTodos, newTodo]);
+    onSettled: () => {
+      // 최종적으로 서버와 동기화
+      queryClient.invalidateQueries({ queryKey: ["todos"] });
     }
   });
   
@@ -48,7 +47,6 @@ export default function TodoForm() {
       completed: false,
       created_at: new Date().toISOString()
     });
-
     setTitle(""); // 입력 필드 초기화
   };
 
