@@ -12,7 +12,10 @@ const pretendard = localFont({
 
 export const metadata: Metadata = {
   title: "TO-DO 리스트",
-  description: "인텔리픽 바로인턴-10기 Web(React) 과제입니다."
+  description: "인텔리픽 바로인턴-10기 Web(React) 과제입니다.",
+  icons: {
+    icon: '/images/favicon.svg',
+  },
 };
 
 export default function RootLayout({
