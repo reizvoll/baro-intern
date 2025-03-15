@@ -11,22 +11,35 @@ export default function TodoForm() {
 
   // createTodo API를 호출하는 뮤테이션
   const createMutation = useMutation({
-    mutationFn: (newTodo: Todo) => createTodo(newTodo),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["todos"] });
+    mutationFn: createTodo,
+    onMutate: async (newTodo) => {
+      await queryClient.cancelQueries({ queryKey: ["todos"] }); // 기존 요청 중단
+
+      // 기존 todos 가져오기
+      const prevTodos = queryClient.getQueryData<Todo[]>(["todos"]) || [];
+
+      // 새로운 todo를 낙관적으로 추가
+      queryClient.setQueryData(["todos"], (oldTodos: Todo[] = []) => [...oldTodos, newTodo]);
+
+      return { prevTodos };
+    },
+    onError: (_err, _newTodo, context) => {
+      // 요청 실패 시 롤백
+      queryClient.setQueryData(["todos"], context?.prevTodos);
+    },
+    onSuccess: (newTodo) => {
+      // 성공 시 UI에서 바로 반영 (불필요한 refetch 방지)
+      queryClient.setQueryData(["todos"], (oldTodos: Todo[] = []) => [...oldTodos, newTodo]);
     }
   });
+  
   // 폼 제출 이벤트 핸들러
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!title.trim()) return;
 
-    // 현재 todos 목록 가져와 배열로 처리 (없으면 빈 배열이 나오게끔)
-    const todos = (queryClient.getQueryData<Todo[]>(["todos"]) ?? []) as Todo[];
-    const maxId = todos.reduce((max: number, todo: Todo) => {
-      const numId = parseInt(todo.id, 10);
-      return numId > max ? numId : max;
-    }, 0);
+    const todos = queryClient.getQueryData<Todo[]>(["todos"]) || [];
+    const maxId = todos.reduce((max, todo) => Math.max(max, parseInt(todo.id, 10)), 0);
     const newId = (maxId + 1).toString();
 
     createMutation.mutate({
@@ -35,7 +48,8 @@ export default function TodoForm() {
       completed: false,
       created_at: new Date().toISOString()
     });
-    setTitle(""); //초기화 설정
+
+    setTitle(""); // 입력 필드 초기화
   };
 
   return (
