@@ -1,6 +1,6 @@
 import { Todo } from "../types/todo";
 
-const API_URL = "http://localhost:3000/todos";
+const API_URL = process.env.NEXT_PUBLIC_API_URL as string;
 
 // 목록 조회
 export async function fetchTodos(): Promise<Todo[]> {
