@@ -5,9 +5,9 @@ import { deleteTodo, updateTodo } from "../api/api";
 import { Todo } from "../types/todo";
 import TodoEditor from "./TodoEditor";
 import Checkbox from "./ui/Checkbox";
+import Dot from "./ui/Dot";
 import EditButton from "./ui/EditButton";
 import TrashButton from "./ui/TrashButton";
-import Dot from "./ui/Dot";
 
 export default function TodoItem({ todo }: { todo: Todo }) {
   const queryClient = useQueryClient();
@@ -26,12 +26,12 @@ export default function TodoItem({ todo }: { todo: Todo }) {
 
   const updateMutation = useMutation({
     mutationFn: (updated: Todo) => updateTodo(updated),
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["todos"] }),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["todos"] })
   });
 
   const deleteMutation = useMutation({
     mutationFn: (id: string) => deleteTodo(id),
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["todos"] }),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["todos"] })
   });
 
   const handleToggle = () => {
@@ -81,12 +81,23 @@ export default function TodoItem({ todo }: { todo: Todo }) {
       </div>
 
       <div className="flex items-center">
-        <span className="text-body1 tb:text-body2 mb:text-body3 min-w-[40px] pl-2 text-right text-gray-500 dark:text-gray-400">
-          {formatTime(todo.created_at, isMobile)}
-        </span>
-        <div className="flex gap-2 px-2 mb:px-1">
+        {!isEditing && (
+          <span className="text-body1 tb:text-body2 mb:text-body3 min-w-[40px] pl-2 text-right text-gray-500 dark:text-gray-400">
+            {formatTime(todo.created_at, isMobile)}
+          </span>
+        )}
+        <div className="flex px-2 mb:px-1">
           {isMobile ? (
-            <Dot onEdit={handleEdit} onDelete={handleDelete} />
+            isEditing ? (
+              <button
+                onClick={handleTitleSubmit.bind(null, todo.title)}
+                className="text-body3 px-1 text-gray-500 hover:text-gray-700 dark:text-gray-300 dark:hover:text-gray-500"
+              >
+                완료
+              </button>
+            ) : (
+              <Dot onEdit={handleEdit} onDelete={handleDelete} />
+            )
           ) : (
             <>
               {isEditing ? (
@@ -97,9 +108,11 @@ export default function TodoItem({ todo }: { todo: Todo }) {
                   완료
                 </button>
               ) : (
-                <EditButton onClick={handleTextClick} title="Edit Todo" />
+                <>
+                  <EditButton onClick={handleTextClick} title="수정" />
+                  <TrashButton onClick={handleDelete} title="삭제" />
+                </>
               )}
-              <TrashButton onClick={handleDelete} title="Delete Todo" />
             </>
           )}
         </div>
