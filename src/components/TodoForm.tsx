@@ -33,7 +33,7 @@ export default function TodoForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="mx-auto flex max-w-[600px] flex-nowrap gap-2 p-4 tb:p-2 tb:mt-2">
+    <form onSubmit={handleSubmit} className="mx-auto flex max-w-[600px] flex-nowrap gap-2 p-4 tb:mt-2 tb:p-2">
       <input
         className="text-body1 tb:text-body2 mb:text-body3 min-w-0 flex-1 rounded border bg-white px-2 py-1 outline-none dark:border-gray-600 dark:bg-gray-800 dark:text-white"
         type="text"
@@ -43,9 +43,10 @@ export default function TodoForm() {
       />
       <button
         type="submit"
-        className="text-body1 tb:text-body2 mb:text-body3 shrink-0 rounded-full bg-gray-400 px-3 py-1 text-white hover:bg-gray-500 dark:bg-gray-600 dark:hover:bg-gray-700"
+        className="text-body1 tb:text-body2 mb:text-body3 shrink-0 rounded-full bg-gray-400 px-3 py-1 text-white hover:bg-gray-500 dark:bg-indigo-700/80 dark:hover:bg-indigo-800/80"
       >
-        <span>Add +</span>
+        <span className="block mb:hidden">Add +</span>
+        <span className="hidden mb:block">+</span>
       </button>
     </form>
   );
