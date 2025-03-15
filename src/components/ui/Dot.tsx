@@ -24,10 +24,9 @@ export default function Dot({ onEdit, onDelete }: DotProps) {
       {menuOpen && (
         <div
           className="
-            absolute top-full right-0 rounded
+            absolute top-full right-0
             inline-flex items-center gap-4
-            whitespace-nowrap
-            bg-white p-2 shadow-lg
+            whitespace-nowrap p-2 shadow-md
             dark:bg-gray-800
             z-50
           "
