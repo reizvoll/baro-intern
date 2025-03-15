@@ -28,7 +28,7 @@ export default function TodoForm() {
       id: id,
       title,
       completed: false,
-      createdAt: new Date().toISOString()
+      created_at: new Date().toISOString()
     });
   };
 

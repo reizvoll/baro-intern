@@ -102,7 +102,7 @@ export default function TodoItem({ todo }: { todo: Todo }) {
 
       <div className="flex items-center">
         <span className="text-body1 tb:text-body2 mb:text-body3 min-w-[40px] pl-2 text-right text-gray-500 dark:text-gray-400">
-          {formatTime(todo.createdAt, isMobile)}
+          {formatTime(todo.created_at, isMobile)}
         </span>
         <div className="flex gap-2 px-4">
           {isEditing ? (
