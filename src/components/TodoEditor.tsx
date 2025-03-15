@@ -1,15 +1,13 @@
-import { KeyboardEvent, useEffect, useRef, useState } from "react";
+import { KeyboardEvent, useState } from "react";
 
 type TodoEditorProps = {
   title: string;
   onSubmit: (newTitle: string) => void;
   onCancel: () => void;
-  finishEditingTrigger?: boolean;
 };
 
-export default function TodoEditor({ title, onSubmit, onCancel, finishEditingTrigger = false }: TodoEditorProps) {
+export default function TodoEditor({ title, onSubmit, onCancel }: TodoEditorProps) {
   const [newTitle, setNewTitle] = useState(title);
-  const handleEditSubmitRef = useRef<() => void>(() => {});
 
   const handleEditSubmit = () => {
     const trimmedTitle = newTitle.trim();
@@ -28,12 +26,6 @@ export default function TodoEditor({ title, onSubmit, onCancel, finishEditingTri
       setNewTitle(title);
     }
   };
-
-  useEffect(() => {
-    if (finishEditingTrigger) {
-      handleEditSubmitRef.current();
-    }
-  }, [finishEditingTrigger]);
 
   return (
     <input
