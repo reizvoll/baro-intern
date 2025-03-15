@@ -22,21 +22,13 @@ export default function Dot({ onEdit, onDelete }: DotProps) {
       </button>
 
       {menuOpen && (
-        <div
-          className="
-            absolute top-full right-0
-            inline-flex items-center gap-4
-            whitespace-nowrap p-2 shadow-md
-            dark:bg-gray-800
-            z-50
-          "
-        >
+        <div className="absolute right-0 top-full shadow-md z-50 inline-flex items-center gap-4 whitespace-nowrap rounded bg-gray-200/30 p-2 dark:bg-gray-800/70">
           <button
             onClick={() => {
               setMenuOpen(false);
               onEdit();
             }}
-            className="text-body3 text-gray-500 hover:text-blue-700 dark:text-gray-300 dark:hover:text-blue-500"
+            className="text-body3 text-gray-500 dark:text-gray-300"
           >
             수정
           </button>
@@ -45,7 +37,7 @@ export default function Dot({ onEdit, onDelete }: DotProps) {
               setMenuOpen(false);
               onDelete();
             }}
-            className="text-body3 text-gray-500 hover:text-red-500 dark:text-gray-300 dark:hover:text-red-400"
+            className="text-body3 text-gray-500 dark:text-gray-300"
           >
             삭제
           </button>
