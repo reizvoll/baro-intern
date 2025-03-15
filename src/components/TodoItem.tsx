@@ -7,6 +7,7 @@ import TodoEditor from "./TodoEditor";
 import Checkbox from "./ui/Checkbox";
 import EditButton from "./ui/EditButton";
 import TrashButton from "./ui/TrashButton";
+import Dot from "./ui/Dot";
 
 export default function TodoItem({ todo }: { todo: Todo }) {
   const queryClient = useQueryClient();
@@ -16,7 +17,7 @@ export default function TodoItem({ todo }: { todo: Todo }) {
 
   useEffect(() => {
     const handleResize = () => {
-      setIsMobile(window.innerWidth < 420); // 420px 미만, 모바일로 판단
+      setIsMobile(window.innerWidth < 480);
     };
 
     handleResize(); // 초기 실행
@@ -104,18 +105,24 @@ export default function TodoItem({ todo }: { todo: Todo }) {
         <span className="text-body1 tb:text-body2 mb:text-body3 min-w-[40px] pl-2 text-right text-gray-500 dark:text-gray-400">
           {formatTime(todo.created_at, isMobile)}
         </span>
-        <div className="flex gap-2 px-4">
-          {isEditing ? (
-            <button
-              onClick={handleEditButtonClick}
-              className="text-body1 tb:text-body2 mb:text-body3 text-gray-500 hover:text-gray-700 dark:text-gray-300 dark:hover:text-gray-500"
-            >
-              수정하기
-            </button>
+        <div className="flex gap-2 px-2 mb:px-1">
+          {isMobile ? (
+            <Dot onEdit={handleEditButtonClick} onDelete={handleDelete} />
           ) : (
-            <EditButton onClick={handleEditButtonClick} title="Edit Todo" />
+            <>
+              {isEditing ? (
+                <button
+                  onClick={handleEditButtonClick}
+                  className="text-body1 tb:text-body2 mb:text-body3 text-gray-500 hover:text-gray-700 dark:text-gray-300 dark:hover:text-gray-500"
+                >
+                  수정하기
+                </button>
+              ) : (
+                <EditButton onClick={handleEditButtonClick} title="Edit Todo" />
+              )}
+              <TrashButton onClick={handleDelete} title="Delete Todo" />
+            </>
           )}
-          <TrashButton onClick={handleDelete} title="Delete Todo" />
         </div>
       </div>
     </li>
