@@ -1,15 +1,15 @@
-"use client";
-
-import { KeyboardEvent, useState } from "react";
+import { KeyboardEvent, useEffect, useRef, useState } from "react";
 
 type TodoEditorProps = {
   title: string;
   onSubmit: (newTitle: string) => void;
   onCancel: () => void;
+  finishEditingTrigger?: boolean;
 };
 
-export default function TodoEditor({ title, onSubmit, onCancel }: TodoEditorProps) {
+export default function TodoEditor({ title, onSubmit, onCancel, finishEditingTrigger = false }: TodoEditorProps) {
   const [newTitle, setNewTitle] = useState(title);
+  const handleEditSubmitRef = useRef<() => void>(() => {});
 
   const handleEditSubmit = () => {
     const trimmedTitle = newTitle.trim();
@@ -29,6 +29,12 @@ export default function TodoEditor({ title, onSubmit, onCancel }: TodoEditorProp
     }
   };
 
+  useEffect(() => {
+    if (finishEditingTrigger) {
+      handleEditSubmitRef.current();
+    }
+  }, [finishEditingTrigger]);
+
   return (
     <input
       type="text"
@@ -37,7 +43,7 @@ export default function TodoEditor({ title, onSubmit, onCancel }: TodoEditorProp
       onBlur={handleEditSubmit}
       onKeyDown={handleKeyDown}
       autoFocus
-      className="text-body1 tb:text-body2 mb:text-body3 min-w-0 flex-1 rounded border bg-white px-2 py-1 outline-none transition-colors dark:border-gray-600 dark:bg-gray-800 dark:text-white"
+      className="text-body1 tb:text-body2 mb:text-body3 min-w-0 flex-1 rounded border px-2 py-1 outline-none transition-colors dark:border-gray-600 dark:bg-gray-800 dark:text-white"
     />
   );
 }

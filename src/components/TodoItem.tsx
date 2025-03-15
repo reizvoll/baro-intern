@@ -1,5 +1,3 @@
-"use client";
-
 import { formatTime } from "@/utils/formatTime";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
@@ -14,6 +12,7 @@ export default function TodoItem({ todo }: { todo: Todo }) {
   const queryClient = useQueryClient();
   const [isMobile, setIsMobile] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
+  const [finishEditingTrigger, setFinishEditingTrigger] = useState(false);
 
   useEffect(() => {
     const handleResize = () => {
@@ -54,10 +53,26 @@ export default function TodoItem({ todo }: { todo: Todo }) {
   const handleTitleSubmit = (newTitle: string) => {
     updateMutation.mutate({ ...todo, title: newTitle });
     setIsEditing(false);
+    setFinishEditingTrigger(false);
   };
 
   const handleTitleCancel = () => {
     setIsEditing(false);
+    setFinishEditingTrigger(false);
+  };
+
+  // 클릭하면 수정 모드 진입 (모바일/데스크톱 모두)
+  const handleTextClick = () => {
+    setIsEditing(true);
+  };
+
+  // 수정 모드일 때 EditButton 클릭 시 finishEditingTrigger를 true로 변경하여 제출하도록 함
+  const handleEditButtonClick = () => {
+    if (isEditing) {
+      setFinishEditingTrigger(true);
+    } else {
+      setIsEditing(true);
+    }
   };
 
   return (
@@ -66,14 +81,19 @@ export default function TodoItem({ todo }: { todo: Todo }) {
       <div className="flex min-w-0 flex-1 items-center gap-4">
         <Checkbox checked={todo.completed} onToggle={handleToggle} />
         {isEditing ? (
-          <TodoEditor title={todo.title} onSubmit={handleTitleSubmit} onCancel={handleTitleCancel} />
+          <TodoEditor
+            title={todo.title}
+            onSubmit={handleTitleSubmit}
+            onCancel={handleTitleCancel}
+            finishEditingTrigger={finishEditingTrigger}
+          />
         ) : (
           <span
             className={`min-w-0 flex-1 cursor-pointer truncate transition-colors ${
               todo.completed ? "text-gray-400 dark:text-gray-600" : "text-gray-900 dark:text-gray-100"
             } text-body1 tb:text-body2 mb:text-body3`}
             title={todo.title}
-            onDoubleClick={() => setIsEditing(true)}
+            onClick={handleTextClick}
           >
             {todo.title}
           </span>
@@ -85,16 +105,17 @@ export default function TodoItem({ todo }: { todo: Todo }) {
           {formatTime(todo.createdAt, isMobile)}
         </span>
         <div className="flex gap-2 px-4">
-          <EditButton
-            onClick={() => setIsEditing(true)}
-            className="text-gray-500 hover:text-blue-700 dark:text-gray-400 dark:hover:text-blue-500"
-            title="Edit Todo"
-          />
-          <TrashButton
-            onClick={handleDelete}
-            className="text-gray-500 hover:text-blue-700 dark:text-gray-400 dark:hover:text-blue-500"
-            title="Delete Todo"
-          />
+          {isEditing ? (
+            <button
+              onClick={handleEditButtonClick}
+              className="text-body1 tb:text-body2 mb:text-body3 text-gray-500 hover:text-gray-700 dark:text-gray-300 dark:hover:text-gray-500"
+            >
+              수정하기
+            </button>
+          ) : (
+            <EditButton onClick={handleEditButtonClick} title="Edit Todo" />
+          )}
+          <TrashButton onClick={handleDelete} title="Delete Todo" />
         </div>
       </div>
     </li>

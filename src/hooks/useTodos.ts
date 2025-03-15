@@ -1,5 +1,3 @@
-"use client";
-
 import { useQuery } from "@tanstack/react-query";
 import { fetchTodos } from "../api/api";
 import { Todo } from "../types/todo";
