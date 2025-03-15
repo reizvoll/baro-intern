@@ -34,7 +34,7 @@ export default function TodoItem({ todo }: { todo: Todo }) {
 
       // UI에서 먼저 즉시 반영 (낙관적 업데이트)
       queryClient.setQueryData(["todos"], (oldTodos: Todo[] = []) =>
-        oldTodos.map((t) => (t.id === updated.id ? { ...t, completed: updated.completed } : t))
+        oldTodos.map((t) => (t.id === updated.id ? { ...t, title: updated.title, completed: updated.completed } : t))
       );
 
       return { prevTodos };
@@ -71,6 +71,12 @@ export default function TodoItem({ todo }: { todo: Todo }) {
   };
 
   const handleTitleSubmit = (newTitle: string) => {
+    if (!newTitle.trim() || newTitle === todo.title) {
+      setIsEditing(false);
+      return;
+    }
+  
+    // 수정 후 UI 즉시 업데이트
     updateMutation.mutate({ ...todo, title: newTitle });
     setIsEditing(false);
   };
