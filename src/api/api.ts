@@ -6,7 +6,7 @@ const API_URL = process.env.NEXT_PUBLIC_API_URL as string;
 export async function fetchTodos(): Promise<Todo[]> {
   const res = await fetch(API_URL);
   if (!res.ok) {
-    throw new Error("Failed to fetch todos");
+    throw new Error("Todo 목록 조회에 실패했습니다.");
   }
   return res.json();
 }
@@ -19,7 +19,7 @@ export async function createTodo(newTodo: Todo): Promise<Todo> {
     body: JSON.stringify(newTodo)
   });
   if (!res.ok) {
-    throw new Error("Failed to create todo");
+    throw new Error("Todo 생성에 실패했습니다.");
   }
   return res.json();
 }
@@ -32,7 +32,7 @@ export async function updateTodo(updatedTodo: Todo): Promise<Todo> {
     body: JSON.stringify(updatedTodo)
   });
   if (!res.ok) {
-    throw new Error("Failed to update todo");
+    throw new Error("Todo 업데이트에 실패했습니다.");
   }
   return res.json();
 }
@@ -43,6 +43,6 @@ export async function deleteTodo(id: string): Promise<void> {
     method: "DELETE"
   });
   if (!res.ok) {
-    throw new Error("Failed to delete todo");
+    throw new Error("Todo 삭제에 실패햇습니다.");
   }
 }
